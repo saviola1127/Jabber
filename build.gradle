@@ -33,7 +33,7 @@ ext {
     versionName = '1.0.0'
 
     // 相关依赖库版本
-    supportVersion = '27.1.1'
+    supportVersion = '25.3.1'
     butterknifeVersion = '8.5.1'
     geniusVersion = '2.1.1'
     glideVersion = '3.7.0'

@@ -1,4 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <resources>
+    <!-- recyclerview封装的tag属性-->
     <item name="tag_recycler_holder" type="id"/>
+    <item name="default_portrait" type="drawable" />
 </resources>
