@@ -1,12 +1,12 @@
 package net.qiujuer.italker.push.common.app;
 
 import android.annotation.SuppressLint;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.PersistableBundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 
 import java.util.List;
 
@@ -21,11 +21,7 @@ public abstract class Activity extends AppCompatActivity {
         //初始化之前调用的初始化窗口
         initWindows();
 
-        Log.e("Debug", "Activity is Ok.");
-
         if (initArgs(getIntent().getExtras())) {
-
-            Log.e("Debug", "Here is Ok.");
 
             int layoutId = getContentLayoutId();
             setContentView(layoutId);
