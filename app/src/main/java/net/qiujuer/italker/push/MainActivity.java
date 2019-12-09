@@ -2,12 +2,10 @@ package net.qiujuer.italker.push;
 
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.animation.AnticipateOvershootInterpolator;
-import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 
