@@ -37,6 +37,7 @@ public class NavHelper<T> {
     // 返回是否能够处理这个点击
     public boolean performClickMenu(int menuId) {
 
+
         //集合中寻找点击的菜单对应的Tab
         Tab<T> tab = tabs.get(menuId);
         if (tab != null) {

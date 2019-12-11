@@ -1,24 +1,19 @@
 package net.qiujuer.italker.push.common.widget;
 
 import android.content.Context;
-import android.content.CursorLoader;
-import android.content.Loader;
-import android.content.res.TypedArray;
 import android.database.Cursor;
-import android.graphics.Canvas;
-import android.graphics.Color;
-import android.graphics.Paint;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.v4.app.LoaderManager;
+import android.support.v4.content.CursorLoader;
+import android.support.v4.content.Loader;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.text.TextPaint;
 import android.util.AttributeSet;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
@@ -30,12 +25,11 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Objects;
 
 
 public class GalleyView extends RecyclerView {
     private static final int LOADER_ID = 0x00;
-    private static final int MAX_IMAGE_SEL = 9; //最大的图片选中数量
+    private static final int MAX_IMAGE_SEL = 3; //最大的图片选中数量
     private static final int MIN_IMAGE_SIZE = 10 * 1024;
     private LoaderCallback loaderCallback = new LoaderCallback();
     private Adapter mAdapter = new Adapter();
@@ -78,7 +72,7 @@ public class GalleyView extends RecyclerView {
      * @param loaderManager
      * @return 一个loader ID，可用于销毁LOADER
      */
-    public int setup(android.app.LoaderManager loaderManager, SelectedChangeListener listener) {
+    public int setup(LoaderManager loaderManager, SelectedChangeListener listener) {
         mListener = listener;
         loaderManager.initLoader(LOADER_ID, null, loaderCallback);
         return LOADER_ID;
@@ -101,6 +95,9 @@ public class GalleyView extends RecyclerView {
         } else {
             if (mSelectedImages.size() >= MAX_IMAGE_SEL) {
                 //Toast for alert
+                Toast.makeText(getContext(),
+                        String.format(getResources().getString(R.string.label_gallery_select_max_size), MAX_IMAGE_SEL),
+                        Toast.LENGTH_SHORT).show();
                 notifyRefresh = false;
             } else {
                 mSelectedImages.add(image);
@@ -167,7 +164,7 @@ public class GalleyView extends RecyclerView {
     /***
      * 用于实际的数据加载的Loader Callback
      */
-    private class LoaderCallback implements android.app.LoaderManager.LoaderCallbacks<Cursor> {
+    private class LoaderCallback implements LoaderManager.LoaderCallbacks<Cursor> {
         private final String[] IMAGE_PROJECTION = new String[]{
                 MediaStore.Images.Media._ID,
                 MediaStore.Images.Media.DATA,
@@ -182,13 +179,13 @@ public class GalleyView extends RecyclerView {
                         IMAGE_PROJECTION,
                         null,
                         null,
-                        IMAGE_PROJECTION[2] + "DESC"); //倒序查询
+                        IMAGE_PROJECTION[2] + " DESC"); //倒序查询
             }
             return null;
         }
 
         @Override
-        public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
+        public void onLoadFinished(android.support.v4.content.Loader<Cursor> loader, Cursor data) {
             //当loader加载完成时
             List<Image> images = new ArrayList<>();
             // 判断是否有数据
@@ -226,7 +223,7 @@ public class GalleyView extends RecyclerView {
         }
 
         @Override
-        public void onLoaderReset(Loader<Cursor> loader) {
+        public void onLoaderReset(android.support.v4.content.Loader<Cursor> loader) {
             updateSource(null);
         }
     }
@@ -278,7 +275,7 @@ public class GalleyView extends RecyclerView {
     }
 
     /****
-     * cell对应的view holer
+     * cell对应的view holder
      */
     private class ViewHolder extends RecyclerAdapter.ViewHolder<Image> {
 
@@ -303,6 +300,7 @@ public class GalleyView extends RecyclerView {
                     .into(mPic);
             mShade.setVisibility(image.isSelected ? VISIBLE : INVISIBLE);
             mSelected.setChecked(image.isSelected);
+            mSelected.setVisibility(VISIBLE);
         }
     }
 

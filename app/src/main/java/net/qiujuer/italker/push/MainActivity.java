@@ -1,7 +1,11 @@
 package net.qiujuer.italker.push;
 
+import android.Manifest;
+import android.content.pm.PackageManager;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -87,11 +91,42 @@ public class MainActivity extends Activity
     protected void initData() {
         super.initData();
 
+        requestPermission();
+    }
+
+
+    private void performDefaultAction() {
         //默然做第一次选择
-        // 从底部导航中接管我们的menu，然后进行手动的第一次点击
+        //从底部导航中接管我们的menu，然后进行手动的第一次点击
         Menu menu = mNavigation.getMenu();
         //触发首次选中Home
         menu.performIdentifierAction(R.id.action_home, 0);
+    }
+
+    private void requestPermission() {
+        String[] permissions = new String[]{
+                Manifest.permission.READ_EXTERNAL_STORAGE
+        };
+
+        if (ContextCompat.checkSelfPermission(MainActivity.this, permissions[0]) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(MainActivity.this, permissions, 1);
+        } else {
+            performDefaultAction();
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        switch (requestCode) {
+            case 1:
+                if (grantResults.length >0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    performDefaultAction();
+                }
+                break;
+
+                default:
+                    break;
+        }
     }
 
     @OnClick(R.id.im_search)
@@ -111,11 +146,6 @@ public class MainActivity extends Activity
 
         //转接事件流到工具类中进行处理
         return mNavHelper.performClickMenu(item.getItemId());
-    }
-
-    @Override
-    public void onPointerCaptureChanged(boolean hasCapture) {
-
     }
 
     @Override
