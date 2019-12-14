@@ -20,6 +20,7 @@ import com.bumptech.glide.request.target.ViewTarget;
 
 import net.qiujuer.genius.ui.Ui;
 import net.qiujuer.genius.ui.widget.FloatActionButton;
+import net.qiujuer.italker.push.activities.AccountActivity;
 import net.qiujuer.italker.push.common.app.Activity;
 import net.qiujuer.italker.push.common.widget.PortraitView;
 import net.qiujuer.italker.push.frags.main.ActiveFragment;
@@ -136,7 +137,7 @@ public class MainActivity extends Activity
 
     @OnClick(R.id.btn_action)
     void onAction() {
-
+        AccountActivity.show(this);
     }
 
     boolean ifFirst = true;

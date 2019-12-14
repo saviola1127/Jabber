@@ -27,7 +27,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 
-public class GalleyView extends RecyclerView {
+public class GalleryView extends RecyclerView {
     private static final int LOADER_ID = 0x00;
     private static final int MAX_IMAGE_SEL = 3; //最大的图片选中数量
     private static final int MIN_IMAGE_SIZE = 10 * 1024;
@@ -36,17 +36,17 @@ public class GalleyView extends RecyclerView {
     private List<Image> mSelectedImages = new LinkedList<>();
     private SelectedChangeListener mListener;
 
-    public GalleyView(Context context) {
+    public GalleryView(Context context) {
         super(context);
         init();
     }
 
-    public GalleyView(Context context, AttributeSet attrs) {
+    public GalleryView(Context context, AttributeSet attrs) {
         super(context, attrs);
         init();
     }
 
-    public GalleyView(Context context, AttributeSet attrs, int defStyle) {
+    public GalleryView(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
         init();
     }
@@ -270,7 +270,7 @@ public class GalleyView extends RecyclerView {
 
         @Override
         protected ViewHolder<Image> createViewHolder(View root, int viewType) {
-            return new GalleyView.ViewHolder(root);
+            return new GalleryView.ViewHolder(root);
         }
     }
 
